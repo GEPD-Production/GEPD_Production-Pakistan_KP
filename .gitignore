@@ -80,6 +80,7 @@
 !/**/*_rawdata/*/*.csv
 
 
+!/**/04_GEPD_Indicators/*.csv
 
 
 # image files in documentation folders
