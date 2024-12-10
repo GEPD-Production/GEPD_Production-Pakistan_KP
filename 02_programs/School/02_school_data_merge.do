@@ -25,6 +25,18 @@ frame change school
 
 use "${data_dir}\\School\\EPDash.dta" 
 
+
+
+* Fixes in school file:  teacher_ids:
+
+replace m4saq1_number = 2  if school_code_preload == "27850"
+replace m4saq1_number = 6  if school_code_preload == "12767"
+
+
+replace m4saq1_number = 1 if school_code_preload  == "16711" & interview__id == "e7d4c404ad31475ab4b83e156ff4ab56"
+replace m4saq1_number = 2 if school_code_preload  == "61915" & interview__id == "92185b79ca60414eaff13773789c6586"
+
+
 ********
 *read in the school weights
 ********
@@ -108,7 +120,8 @@ frame change teachers
 * We are assuming the teacher level modules (Teacher roster, Questionnaire, Pedagogy, and Content Knowledge have already been linked here)
 * See Merge_Teacher_Modules code folder for help in this task if needed
 ********
-use "${data_dir}\\School\\PAK_KP_teacher_level.dta" 
+
+use "${data_dir}\\School\\PAK_KP_teacher_level_updated.dta" 
 
 recode m2saq3 1=2 0=1
 
@@ -154,7 +167,6 @@ gen teacher_pedagogy_weight=numEligible4th/1 // one teacher selected
 replace teacher_pedagogy_weight=1 if missing(teacher_pedagogy_weight) //fix issues where no g1 teachers listed. Can happen in very small schools
 
 drop if missing(school_weight)
-
 
 
 
