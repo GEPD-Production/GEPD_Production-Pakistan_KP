@@ -36,11 +36,15 @@ options(survey.lonely.psu = "adjust")
 GEPD_template <- read_csv(here("04_GEPD_Indicators", "GEPD_indicator_template.csv"))
 
 # load main files
-school_dta <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("school_", software, ".dta")))
+school_dta <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("school_", software, ".dta")))%>% 
+  mutate(strata = factor(strata))
 teachers_dta <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("teachers_", software, ".dta"))) %>%
-  filter(!is.na(teachers_id))
-first_grade <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("first_grade_", software, ".dta")))
-fourth_grade <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("fourth_grade_", software, ".dta")))
+  filter(!is.na(teachers_id))%>% 
+  mutate(strata = factor(strata))
+first_grade <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("first_grade_", software, ".dta")))%>% 
+  mutate(strata = factor(strata))
+fourth_grade <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("fourth_grade_", software, ".dta")))%>% 
+  mutate(strata = factor(strata))
 public_officials_dta <- read_dta(here(processed_dir, "Public_Officials", "Confidential", "public_officials.dta"))
 expert_df <- read_dta(here(processed_dir, "Policy_Survey", "expert_dta_final.dta"))
 defacto_dta_learners <- read_excel(here(processed_dir, "Other_Indicators", "Learners_defacto_indicators.xlsx"))
