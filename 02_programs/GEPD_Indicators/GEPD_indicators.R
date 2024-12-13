@@ -144,10 +144,10 @@ indicator_stats <- function(name, indicator, dataset, tag, unit) {
       stat_df <- teachers_dta
     } else if (unit == "Female") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 2)
+        filter(m2saq3 == 1)
     } else if (unit == "Male") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 1)
+        filter(m2saq3 == 0)
     } else if (unit == "Rural") {
       stat_df <- teachers_dta %>%
         filter(urban_rural == "Rural")
@@ -190,10 +190,10 @@ indicator_stats <- function(name, indicator, dataset, tag, unit) {
       stat_df <- teachers_dta
     } else if (unit == "Female") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 2)
+        filter(m2saq3 == 1)
     } else if (unit == "Male") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 1)
+        filter(m2saq3 == 0)
     } else if (unit == "Rural") {
       stat_df <- teachers_dta %>%
         filter(urban_rural == "Rural")
@@ -236,10 +236,10 @@ indicator_stats <- function(name, indicator, dataset, tag, unit) {
       stat_df <- teachers_dta
     } else if (unit == "Female") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 2)
+        filter(m2saq3 == 1)
     } else if (unit == "Male") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 1)
+        filter(m2saq3 == 0)
     } else if (unit == "Rural") {
       stat_df <- teachers_dta %>%
         filter(urban_rural == "Rural")
@@ -282,10 +282,10 @@ indicator_stats <- function(name, indicator, dataset, tag, unit) {
       stat_df <- teachers_dta
     } else if (unit == "Female") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 2)
+        filter(m2saq3 == 1)
     } else if (unit == "Male") {
       stat_df <- teachers_dta %>%
-        filter(m2saq3 == 1)
+        filter(m2saq3 == 0)
     } else if (unit == "Rural") {
       stat_df <- teachers_dta %>%
         filter(urban_rural == "Rural")
