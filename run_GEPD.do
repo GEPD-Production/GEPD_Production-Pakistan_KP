@@ -29,5 +29,5 @@ global strata strata
 do "${clone}/02_programs/School/01_school_run.do"
 
 * TASK: calculates GEPD Public Officials Indicators by combining multiple data sources
-do "${clone}/02_programs/Public_Officials/01_public_officials_run.do"
+* do "${clone}/02_programs/Public_Officials/01_public_officials_run.do"
 *-------------------------------------------------------------------------------
