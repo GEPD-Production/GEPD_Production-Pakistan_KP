@@ -82,11 +82,11 @@ SE.PRM.ILDR.3.F,(De Facto) Percent of teachers reporting that the classroom obse
 SE.PRM.ILDR.3.M,(De Facto) Percent of teachers reporting that the classroom observation happened recently - Male,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.ILDR.3.R,(De Facto) Percent of teachers reporting that the classroom observation happened recently - Rural,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.ILDR.3.U,(De Facto) Percent of teachers reporting that the classroom observation happened recently - Urban,Global Education Policy Dashboard,World Bank,NA
-SE.PRM.ILDR.4,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation,Global Education Policy Dashboard,World Bank,NA
-SE.PRM.ILDR.4.F,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation - Female,Global Education Policy Dashboard,World Bank,NA
-SE.PRM.ILDR.4.M,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation - Male,Global Education Policy Dashboard,World Bank,NA
-SE.PRM.ILDR.4.R,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation - Rural,Global Education Policy Dashboard,World Bank,NA
-SE.PRM.ILDR.4.U,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation - Urban,Global Education Policy Dashboard,World Bank,NA
+SE.PRM.ILDR.4,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation for at least 10 minutes,Global Education Policy Dashboard,World Bank,NA
+SE.PRM.ILDR.4.F,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation  for at least 10 minutes - Female,Global Education Policy Dashboard,World Bank,NA
+SE.PRM.ILDR.4.M,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation  for at least 10 minutes - Male,Global Education Policy Dashboard,World Bank,NA
+SE.PRM.ILDR.4.R,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation  for at least 10 minutes - Rural,Global Education Policy Dashboard,World Bank,NA
+SE.PRM.ILDR.4.U,(De Facto) Percent of teachers reporting having discussed the results of the classroom observation  for at least 10 minutes - Urban,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.ILDR.5,(De Facto) Percent of teachers reporting that the discussion was over 30 minutes,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.ILDR.5.F,(De Facto) Percent of teachers reporting that the discussion was over 30 minutes - Female,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.ILDR.5.M,(De Facto) Percent of teachers reporting that the discussion was over 30 minutes - Male,Global Education Policy Dashboard,World Bank,NA
