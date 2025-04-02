@@ -1929,9 +1929,9 @@ replace attendance_rewarded = 0 if m3seq4_tatt==1 & m3seq5_tatt_1!=1
 replace attendance_rewarded = 1 if m3seq4_tatt==1 & m3seq5_tatt_1==1
 replace attendance_rewarded=. if missing(m3seq4_tatt) 
 
-gen attendence_sanctions = 0 if !(missing(m3sbq2_tmna_1) & missing(m3sbq2_tmna_2) & missing(m3sbq2_tmna_3) & missing(m3sbq2_tmna_4) & missing(m3sbq2_tmna_97))
-replace attendence_sanctions = . if missing(m3sbq2_tmna_1) & missing(m3sbq2_tmna_2) & missing(m3sbq2_tmna_3) & missing(m3sbq2_tmna_4) & missing(m3sbq2_tmna_97)
-replace attendence_sanctions = 1 if (m3sbq2_tmna_1==1 | m3sbq2_tmna_2==1 | m3sbq2_tmna_3==1 | m3sbq2_tmna_4==1 | m3sbq2_tmna_97==1)
+gen attendence_sanctions = 0 if !(missing(m3sbq2_tmna_1) & missing(m3sbq2_tmna_2) & missing(m3sbq2_tmna_3) & missing(m3sbq2_tmna_4) & missing(m3sbq2_tmna_5) & missing(m3sbq2_tmna_6) & missing(m3sbq2_tmna_97))
+replace attendence_sanctions = . if missing(m3sbq2_tmna_1) & missing(m3sbq2_tmna_2) & missing(m3sbq2_tmna_3) & missing(m3sbq2_tmna_4) & missing(m3sbq2_tmna_5) & missing(m3sbq2_tmna_6) & missing(m3sbq2_tmna_97)
+replace attendence_sanctions = 1 if (m3sbq2_tmna_1==1 | m3sbq2_tmna_2==1 | m3sbq2_tmna_3==1 | m3sbq2_tmna_4==1 |  m3sbq2_tmna_5 == 1 | m3sbq2_tmna_6 == 1 | m3sbq2_tmna_97==1)
 
 gen miss_class_admin=0 if (m3sbq1_tatt_1==0 & m3sbq1_tatt_2==0 & m3sbq1_tatt_3==0 & m3sbq1_tatt_97==0)
 replace miss_class_admin = 1 if (m3sbq1_tatt_1==1 | m3sbq1_tatt_2==1 | m3sbq1_tatt_3==1 | m3sbq1_tatt_97==1)
