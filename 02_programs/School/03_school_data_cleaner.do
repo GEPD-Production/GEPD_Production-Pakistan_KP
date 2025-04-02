@@ -270,6 +270,8 @@ gl yes_no s_0_1_1 s_0_2_1 s_0_3_1
 gl overall s_a1 s_a2 s_b3 s_b4 s_b5 s_b6 s_c7 s_c8 s_c9
 */
 
+x:
+
 
 gl low_medium_high s_0_1_2 s_0_2_2 s_0_3_2 s_a2_1 s_a2_2 s_a2_3 s_b3_1 s_b3_2 s_b3_3 s_b3_4 s_b5_1 s_b5_2 s_b6_1 s_b6_2 s_b6_3 s_c7_1 s_c7_2 s_c7_3  s_c8_1 s_c8_2 s_c8_3 s_c9_1 s_c9_2 s_c9_3
 
@@ -393,6 +395,7 @@ if (_rc == 7) continue
 *		teacher scored above 3. -- these varibales will be used to calculate the proficiency scores. 
 
 egen classroom_culture = rowmean(s_a1 s_a2)
+
 	foreach var of varlist s_a1 s_a2 {
 	
 	gen     `var'_pro =.
