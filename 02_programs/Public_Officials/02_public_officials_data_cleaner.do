@@ -28,7 +28,7 @@ use "${data_dir}/Public_Officials/public_officials.dta"
 frame create teachers
 frame change teachers
 
-use "${processed_dir}/School/Confidential/Cleaned/teachers.dta"
+use "${processed_dir}/School/Confidential/Cleaned/teachers_Stata.dta"
 
 svyset school_code, strata($strata) singleunit(scaled) weight(school_weight)   || unique_teach_id, weight(teacher_abs_weight)
 svy: mean absence_rate
@@ -38,7 +38,7 @@ gl teacher_absence =  _b[absence_rate]
 frame create school
 frame change school
 
-use "${processed_dir}/School/Confidential/Cleaned/school.dta"
+use "${processed_dir}/School/Confidential/Cleaned/school_Stata.dta"
 
 svyset school_code, strata($strata) singleunit(scaled) weight(school_weight)  
 svy: mean m4scq4_inpt
@@ -58,17 +58,28 @@ foreach var in `r(varlist)' {
 }
 
 *reverse code some indicaotrs so 5 is best and 1 is worst
-local intrinsic_motiv_q_rev scored_QB2q2 scored_QB4q4a scored_QB4q4b scored_QB4q4c scored_QB4q4d scored_QB4q4e scored_QB4q4f scored_QB4q4g scored_IDM1q1 scored_IDM1q2
+local intrinsic_motiv_q_rev scored_QB4q4a scored_QB4q4b scored_QB4q4c scored_QB4q4d scored_QB4q4e scored_QB4q4f scored_QB4q4g scored_IDM1q1 scored_IDM1q2
 
+
+gen score_temp = .
+ replace score_temp = 1 if scored_QB2q2 == 5
+ replace score_temp = 2 if scored_QB2q2 == 4
+ replace score_temp = 3 if scored_QB2q2 == 3
+ replace score_temp = 4 if scored_QB2q2 == 2
+ replace score_temp = 5 if scored_QB2q2 == 1
+ replace score_temp = . if inlist(scored_QB2q2, 900, 998)
+ replace scored_QB2q2 = score_temp
+ drop score_temp
+ 
 foreach var in `intrinsic_motiv_q_rev' {
 gen score_temp=.
-replace score_temp = 1 if `var'==4
-replace score_temp = 2.33 if `var'==3
-replace score_temp = 3.67 if `var'==2
-replace score_temp = 5 if `var'==1
-replace score_temp = . if `var'==99
-replace `var'=score_temp
-drop score_temp
+ 	replace score_temp = 1 if `var'==5
+ 	replace score_temp = 2.33 if `var'==4
+ 	replace score_temp = 3.67 if `var'==2
+ 	replace score_temp = 5 if `var'==1
+ 	replace score_temp = . if `var'==99
+ 	replace `var'=score_temp
+ 	drop score_temp
 }
 
 de scored_NLG* scored_ACM* scored_QB* scored_IDM* scored_ORG*, varlist
