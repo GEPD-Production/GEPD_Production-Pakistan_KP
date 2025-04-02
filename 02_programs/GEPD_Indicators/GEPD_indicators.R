@@ -10,7 +10,7 @@ library(srvyr)
 library(writexl)
 
 # Country name and year of survey
-country_name <- "Pakistan-KP"
+country_name <- "Pakistan_KP"
 country <- "PAK"
 year <- "2023"
 software <- "Stata" # choose R or Stata
@@ -25,7 +25,13 @@ dir <- here()
 data_dir <- here("01_GEPD_raw_data/")
 processed_dir <- here("03_GEPD_processed_data/")
 
-
+if  (str_to_lower(Sys.getenv("USERNAME")) == "wb631589" ){
+  country_folder <- paste0("/GEPD_Production-", country_name)
+  here  <- paste0("C:/Users/wb631589/OneDrive - WBG/GEPD-Confidential/General/Country_Data/", country_folder, "/")
+  dir <- here(here)
+  data_dir <- paste0(here, "01_GEPD_raw_data/")
+  processed_dir <- paste0(here, "03_GEPD_processed_data/")
+}
 
 ## Summary Statistics
 strata <- c("strata")
@@ -33,22 +39,58 @@ strata <- c("strata")
 options(survey.lonely.psu = "adjust")
 
 # load indicator template
-GEPD_template <- read_csv(here("04_GEPD_Indicators", "GEPD_indicator_template.csv"))
+# load indicator template
+if  (str_to_lower(Sys.getenv("USERNAME")) == "wb631589" ){
+  GEPD_template <- read_csv(paste0(here, "04_GEPD_Indicators/", "GEPD_indicator_template.csv"))
+} else {
+  GEPD_template <- read_csv(here("04_GEPD_Indicators", "GEPD_indicator_template.csv"))
+}
+
 
 # load main files
-school_dta <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("school_", software, ".dta")))%>% 
-  mutate(strata = factor(strata))
-teachers_dta <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("teachers_", software, ".dta"))) %>%
-  filter(!is.na(teachers_id))%>% 
-  mutate(strata = factor(strata))
-first_grade <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("first_grade_", software, ".dta")))%>% 
-  mutate(strata = factor(strata))
-fourth_grade <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("fourth_grade_", software, ".dta")))%>% 
-  mutate(strata = factor(strata))
-public_officials_dta <- read_dta(here(processed_dir, "Public_Officials", "Confidential", "public_officials.dta"))
-expert_df <- read_dta(here(processed_dir, "Policy_Survey", "expert_dta_final.dta"))
-defacto_dta_learners <- read_excel(here(processed_dir, "Other_Indicators", "Learners_defacto_indicators.xlsx"))
-finance_df <- read_excel(here(processed_dir, "Other_Indicators", "Finance_scoring.xlsx"))
+if  (str_to_lower(Sys.getenv("USERNAME")) == "wb631589" ){
+  school_dta <- read_dta(paste0(processed_dir, "/School/", "Confidential/", "Cleaned/", paste0("school_", software, ".dta")))
+  teachers_dta <- read_dta(paste0(processed_dir,"/School/", "Confidential/", "Cleaned/", paste0("teachers_",software,".dta"))) %>%
+    mutate(
+      teacher_abs_comb_weight=school_weight*teacher_abs_weight,
+      teacher_quest_comb_weight=school_weight*teacher_questionnaire_weight,
+      teacher_content_comb_weight=school_weight*teacher_content_weight,
+      teacher_pedagogy_comb_weight=school_weight*teacher_pedagogy_weight
+    )
+  first_grade <- read_dta(paste0(processed_dir,"/School/", "Confidential/", "Cleaned/", paste0("first_grade_",software,".dta"))) %>%
+    mutate(
+      g1_comb_weight=school_weight*g1_stud_weight
+    )
+  fourth_grade <- read_dta(paste0(processed_dir,"School/", "Confidential/", "Cleaned/", paste0("fourth_grade_",software,".dta"))) %>%
+    mutate(
+      g4_comb_weight=school_weight*g4_stud_weight
+    )
+  public_officials_dta <- read_dta(paste0(processed_dir, "/Public_Officials/", "Confidential/", "public_officials.dta"))
+  expert_df <- read_dta(paste0(processed_dir, "/Policy_Survey/", "expert_dta_final.dta"))
+  defacto_dta_learners <- read_excel(paste0(processed_dir, "/Other_Indicators/", "Learners_defacto_indicators.xlsx"))
+  finance_df <- read_excel(paste0(processed_dir, "/Other_Indicators/", "Finance_scoring.xlsx"))
+} else {
+  school_dta <- read_dta(here(processed_dir, "School", "Confidential", "Cleaned", paste0("school_", software, ".dta")))
+  teachers_dta <- read_dta(here(processed_dir,"School","Confidential","Cleaned", paste0("teachers_",software,".dta"))) %>%
+    mutate(
+      teacher_abs_comb_weight=school_weight*teacher_abs_weight,
+      teacher_quest_comb_weight=school_weight*teacher_questionnaire_weight,
+      teacher_content_comb_weight=school_weight*teacher_content_weight,
+      teacher_pedagogy_comb_weight=school_weight*teacher_pedagogy_weight
+    )
+  first_grade <- read_dta(here(processed_dir,"School","Confidential","Cleaned", paste0("first_grade_",software,".dta"))) %>%
+    mutate(
+      g1_comb_weight=school_weight*g1_stud_weight
+    )
+  fourth_grade <- read_dta(here(processed_dir,"School","Confidential","Cleaned", paste0("fourth_grade_",software,".dta"))) %>%
+    mutate(
+      g4_comb_weight=school_weight*g4_stud_weight
+    )
+  public_officials_dta <- read_dta(here(processed_dir, "Public_Officials", "Confidential", "public_officials.dta"))
+  expert_df <- read_dta(here(processed_dir, "Policy_Survey", "expert_dta_final.dta"))
+  defacto_dta_learners <- read_excel(here(processed_dir, "Other_Indicators", "Learners_defacto_indicators.xlsx"))
+  finance_df <- read_excel(here(processed_dir, "Other_Indicators", "Finance_scoring.xlsx"))
+}
 
 
 # some reshaping
@@ -1340,8 +1382,11 @@ indicator_data <- left_join(GEPD_template, indicator_data) %>%
   )
 
 # save as csv
-write_excel_csv(indicator_data, here("04_GEPD_Indicators", paste0(country, "_GEPD_Indicators_", software, ".csv")))
-
+if  (str_to_lower(Sys.getenv("USERNAME")) == "wb631589" ){
+  write_excel_csv(indicator_data, paste0(here, "/04_GEPD_Indicators/", paste0(country, "_GEPD_Indicators_", software, ".csv")))
+} else {
+  write_excel_csv(indicator_data, here("04_GEPD_Indicators", paste0(country, "_GEPD_Indicators_", software, ".csv")))
+}
 
 # write to an xlsx named GEPD_indicators.xlsx
 # save one tab with all endicators in this list
