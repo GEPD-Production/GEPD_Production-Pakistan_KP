@@ -930,6 +930,10 @@ frame change first_grade_assessment
  rename   m6s2q6a_name_writing m6s2q6a_nm_writing
  rename   m6s2q6b_name_writing m6s2q6b_nm_writing_response
 
+ *one of the questions had a full set of options, per conversation with Maryam, we are replacing "not administered" as missing
+ gen not_administered = 1 if m6s2q13b_backward_digit == 77
+ replace m6s2q13b_backward_digit = . if m6s2q13b_backward_digit == 77
+ 
 * Recode variables ending with specified suffixes using bin_var function
 foreach suffix in comprehension letters words sentence nm_writing print produce_set number_ident number_compare simple_add backward_digit perspective conflict_resol {
     ds *`suffix'
@@ -976,8 +980,10 @@ replace ecd_math_student_knowledge=ecd_math_student_knowledge/19
 ****Executive Functioning****
 *calculate # of executive functioning items correct
 egen ecd_exec_student_knowledge=rowtotal(*backward_digit *head_shoulders)
-replace ecd_exec_student_knowledge=ecd_exec_student_knowledge/27
-
+*to account for the number of non-missing for that particular question that had a full set of options, divide the sum by 26
+ replace ecd_exec_student_knowledge=ecd_exec_student_knowledge/26 if not_administered == 1
+ replace ecd_exec_student_knowledge=ecd_exec_student_knowledge/27 if not_administered != 1
+ 
 ****Socio-Emotional****
 *calculate # of socio emotional items correct
 egen ecd_soc_student_knowledge=rowtotal(*perspective *conflict_resol)
