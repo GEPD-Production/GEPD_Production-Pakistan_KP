@@ -418,7 +418,7 @@ SE.PRM.TEVL,Policy Lever (Teaching) - Evaluation,Global Education Policy Dashboa
 SE.PRM.TEVL.1,"(De Jure) Legislation assigns responsibility of evaluating the performance of teachers to a public authority (national, regional, local)",Global Education Policy Dashboard,World Bank,NA
 SE.PRM.TEVL.2,(De Jure) The criteria to evaluate teachers is clear,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.TEVL.3,(De Facto) Percent of teachers that report being evaluated in the past 12 months,Global Education Policy Dashboard,World Bank,NA
-SE.PRM.TEVL.4,(De JurNumber of criteria used to evaluate teachers,Global Education Policy Dashboard,World Bank,NA
+SE.PRM.TEVL.4,(De Jure) Number of criteria used to evaluate teachers,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.TEVL.5,(De Facto) Number of criteria used to evaluate teachers,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.TEVL.6,(De Facto) Percent of teachers that report there would be consequences after two negative evaluations,Global Education Policy Dashboard,World Bank,NA
 SE.PRM.TEVL.7,(De Facto) Percent of teachers that report there would be consequences after two positive evaluations,Global Education Policy Dashboard,World Bank,NA
