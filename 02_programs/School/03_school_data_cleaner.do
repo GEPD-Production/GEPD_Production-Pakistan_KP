@@ -2119,6 +2119,12 @@ replace principal_satisfaction = 1 if m7shq1_satt==4
 replace m7shq2_satt=. if m7shq2_satt<0
 replace m7shq2_satt=. if m7shq2_satt==999
 
+*changing the values that seem to be reported in usd to the local currency (the exchange rate is on may 31, 2023)
+replace m7shq2_satt = m7shq2_satt*285 if m7shq2_satt < 100 & !missing(m7shq2_satt)
+
+*change the values that are too high to missing
+replace m7shq2_satt = . if m7shq2_satt > 500000 & !missing(m7shq2_satt)
+
 gen principal_salary=12*m7shq2_satt/$gdp_pcap	
 
 gen principal_salary_score = 1 if principal_salary >=0 & principal_salary<=0.5 & !missing(principal_salary)
