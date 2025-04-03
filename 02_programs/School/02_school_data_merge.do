@@ -232,23 +232,52 @@ gen teacher_content_weight=(numEligible4th_manual/teacher_selected_content)*(tea
 replace teacher_content_weight=1 if missing(teacher_content_weight) //fix issues where no g1 teachers listed. Can happen in very small schools
 
 *teacher pedagogy weights
-*reconstuct eligibility again. for the number of eligible teachers, I use the number of 4th grade teachers that teach either math or language. For now, part-time and volunteer teachers are a part of the calculation
-
+*reconstuct eligibility again. for the number of eligible teachers, I use the number of 4th grade teachers that teach either math of language (with some exceptions, see below). For now, part-time and volunteer teachers are a part of the calculation
 drop eligible numEligible4th_manual
 
-
 egen eligible = rowmax(m2saq7__4)
-replace eligible = 0 if m2saq8__97 == 1 // teaching other subjects
-*replace eligible = 0 if !inlist(teacher_available, 1, 90) & !missing(teacher_available)
-*replace eligible = 0  if m2saq6 == 2
-*replace eligible = 0 if m2saq5 == 4
-replace eligible = 1 if eligible == 0 & s_0_1_1 != .
 
+*exclude the teachers who are not available or not present during the absence check (unless they are observed for some unclear reason...)
+replace eligible = 0 if (teacher_available == 2 & !missing(teacher_available)) | (m2sbq6_efft == 6 & !missing(m2sbq6_efft))
+
+replace eligible = 1 if (teacher_available == 2 & s_0_1_1 != . & !missing(teacher_available)) | (m2sbq6_efft == 6 & s_0_1_1 != . & !missing(m2sbq6_efft))
+
+*exclude the teachers that teach other subject only 
+replace eligible = 0 if m2saq8__97 == 1 & subject_joined == ""
+
+*some of the teachers teaching other subjects were observed, include them back in the eligible count
+replace eligible = 1 if eligible == 0 & m2saq8__97 == 1 & subject_joined == "" & s_0_1_1 != .
+
+*now move to the schools that had teachers NOT from grade 4 observed. for these schools, assume that ALL teachers teaching language and math are eligible, excluding principals who do not teach
+gen flag = 1 if eligible == 0 & s_0_1_1 != .
+bysort school_code: egen tagged_school = max(flag)
+
+*remove the teachers teaching other subjects only (unless they were observed)
+replace tagged_school = 0 if m2saq8__97 == 1 & subject_joined == "" & s_0_1_1 == . & tagged_school != .
+
+*remove principals who do not teach and special needs/preschool only teachers 
+replace tagged_school = 0 if m2saq7__n77 == 1 & tagged_school != .
+
+*remove the teachers who teach 
+
+egen other_grades = rowmax(m2saq7__1 m2saq7__2 m2saq7__3 m2saq7__4 m2saq7__5 m2saq7__6 m2saq7__7)
+replace tagged_school = 0 if other_grades == 0 & (m2saq7__98 == 1 | m2saq7__99 == 1) & tagged_school != .
+replace tagged_school = 0 if other_grades == . & tagged_school != .
+drop other_grades
+
+*finally, remove those not present at school,
+replace tagged_school = 0 if ((teacher_available == 2 & !missing(teacher_available)) | (m2sbq6_efft == 6 & !missing(m2sbq6_efft))) & tagged_school != .
+
+*get the final count for these "special schools"
+bysort school_code: egen final_count = sum(tagged_school), miss
+
+*get the final count for the regular schools
 bysort school_code: egen numEligible4th_manual = sum(eligible)
 
-*confirm that there is only one teacher per school that was observed
-gen observed = 1 if  s_0_1_1 != .
-bysort school_code: egen total_observed = sum(observed)
+*replace with the count for the special schools, wherever applicable
+replace numEligible4th_manual = final_count if final_count != .
+
+drop final_count tagged_school flag
 
 *correct for the cases where the observed teacher is the one 
 gen teacher_pedagogy_weight=numEligible4th_manual/1 // one teacher selected
